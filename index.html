@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Younsang's Learner Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday study record: calm, serious, easy for a teacher to scan
+   IDEA a shelf of thread-bound Korean books (선장본), one book per section
+   PICTURE three indigo covers with title slips, five-hole right-side binding and a red seal with the entry count
+   COLOUR white paper ground, 쪽빛 indigo dominant, pale indigo panels, seal red accent for entry types
+   TYPE Gowun Batang for titles + Noto Sans KR for text
+   LAYOUT laptop: nav, indigo title band, five books on one shelf, recent list; phone: same order, books on two shelves (3 + 2) */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0d121b);--ink:light-dark(#15171c,#e8eaef);--muted:light-dark(#586072,#a7aebe);--line:light-dark(#dde2ea,#283247);--panel:light-dark(#eef2f8,#151e2e);--seal:light-dark(#b3302a,#ef6a5c);--indigo:#1d3a66;--indigo-d:#122849;--indigo-l:#2c5185;--slip:#f6f3ea;--thread:#d8cdb2;--serif:"Gowun Batang","Nanum Myeongjo","AppleMyungjo",serif;--sans:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);overflow-x:clip;word-break:keep-all;overflow-wrap:break-word}
+a{color:inherit}
+:focus-visible{outline:3px solid #e8913a;outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto}
+.band{padding-block:clamp(28px,4vw,56px);padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
+.top{position:sticky;top:0;z-index:5;background:var(--indigo-d);color:#fff;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 16px;padding:4px max(5vw,16px)}
+.brand{font:700 17px/1.2 var(--serif);text-decoration:none;padding:12px 0}
+.top nav{display:flex;flex-wrap:wrap;gap:2px}
+.top nav a{display:flex;align-items:center;min-height:44px;padding:0 12px;text-decoration:none;font-weight:500;font-size:15px;color:#d6dfee;border-radius:6px}
+.top nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+.top nav a[aria-current=page],.ddbtn.on{color:#fff;box-shadow:inset 0 -3px 0 #ef6a5c;border-radius:6px 6px 0 0}
+.hero{background:var(--indigo);color:#fff}
+.hero h1{font:700 clamp(32px,5vw,48px)/1.1 var(--serif);letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance}
+.hero h1.big{font-size:clamp(44px,7.5vw,80px);line-height:1.02;margin:0}
+.hero .who{margin:14px 0 0;font:700 clamp(20px,2.4vw,26px)/1.3 var(--serif);color:#dbe4f2;letter-spacing:.02em}
+.hero .course{margin:0 0 12px;font-weight:500;color:#c8d5ea}
+.hero .intro{max-width:44em;margin:0;color:#e7edf6}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;padding:0;list-style:none}
+.jump a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid rgba(255,255,255,.4);border-radius:999px;text-decoration:none;font-weight:500}
+.jump a:hover{background:rgba(255,255,255,.12)}
+.jump a[aria-current=page]{background:#fff;color:var(--indigo-d);border-color:#fff}
+.filter{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.filter button{min-height:40px;padding:0 14px;border-radius:6px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;font:500 14px/1 var(--sans);cursor:pointer}
+.filter button span{opacity:.75;margin-left:4px}
+.filter button[aria-pressed=true]{background:#fff;color:var(--indigo-d);border-color:#fff}
+.shelfband{padding-bottom:0}
+.shelf,.caps{display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:clamp(10px,3vw,40px)}
+.shelf{align-items:end;padding-inline:clamp(4px,2vw,24px)}
+.book{display:block;text-decoration:none}
+.cover{position:relative;display:block;width:min(100%,200px);aspect-ratio:5/7;margin:0 auto;border-radius:2px 3px 3px 2px;background:repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0 1px,transparent 1px 3px),linear-gradient(165deg,var(--c1),var(--c2));box-shadow:inset 2px 0 0 rgba(255,255,255,.16),9px 0 0 -1px light-dark(rgba(20,30,50,.13),rgba(0,0,0,.45));transition:transform .2s ease}
+.book:hover .cover{transform:translateY(-6px)}
+.b-works{--c1:#29508a;--c2:#183564}
+.b-paper1{--c1:#1f3d6b;--c2:#0f2446}
+.b-paper2{--c1:#2a4774;--c2:#142b52}
+.slip.lat{text-orientation:mixed;letter-spacing:.02em}
+.dd{position:relative}
+.ddbtn{display:flex;align-items:center;gap:4px;min-height:44px;padding:0 12px;border:0;background:none;color:#d6dfee;font:500 15px/1 var(--sans);border-radius:6px;cursor:pointer}
+.ddbtn:hover{background:rgba(255,255,255,.1);color:#fff}
+.ddbtn .chev{transition:transform .15s}
+.ddbtn[aria-expanded=true] .chev{transform:rotate(180deg)}
+.top nav .ddmenu a{align-items:center;padding:0 14px;min-height:46px}
+.top nav .ddmenu a strong{font-size:16px;font-weight:700}
+.top nav .ddmenu a span{font-size:13px;color:var(--muted);font-weight:400}
+.top nav .ddmenu a.all{min-height:40px;font-size:14px;color:var(--muted);border-bottom:1px solid var(--line);border-radius:6px 6px 0 0;margin-bottom:4px}
+.b-assess{--c1:#1f3d6b;--c2:#0f2446}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
+.cards.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.card{display:block;padding:20px 22px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--ink);background:var(--bg)}
+.card:hover{border-color:var(--indigo-l);background:var(--panel)}
+.card h2{margin:0 0 10px;font:700 22px/1.3 var(--serif)}
+.card .meta{margin:0 0 12px;font-size:15px}
+.nums{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0 0 4px;font-size:14px;color:var(--muted)}
+.nums b{font:700 18px/1 var(--serif);color:var(--ink);margin-right:2px}
+.ddmenu{position:absolute;top:100%;left:0;z-index:10;min-width:230px;max-height:calc(100vh - 80px);overflow-y:auto;margin-top:4px;padding:6px;background:var(--bg);border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 16px rgba(0,0,0,.16)}
+.ddmenu[hidden]{display:none}
+.top nav .ddmenu a{color:var(--ink);box-shadow:none;border-radius:6px}
+.top nav .ddmenu a:hover,.top nav .ddmenu a[aria-current=page]{background:var(--panel);color:var(--ink)}
+.b-io{--c1:#34639c;--c2:#1f4475}
+.b-exams{--c1:#1a2c50;--c2:#0a1730}
+.slip .s{display:none}
+.slip{position:absolute;top:7%;left:9%;width:25%;height:62%;display:grid;place-items:center;background:var(--slip);color:#1b1b1b;writing-mode:vertical-rl;text-orientation:upright;font:700 clamp(13px,2.2vw,21px)/1 var(--serif);letter-spacing:.08em;box-shadow:inset 0 0 0 3px var(--slip),inset 0 0 0 4px rgba(0,0,0,.35)}
+.seal{position:absolute;left:9%;bottom:7%;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:30%;padding:5px 6px;background:#b3302a;color:#fff6ee;font:700 clamp(17px,2.6vw,26px)/1 var(--serif);border-radius:3px;box-shadow:inset 0 0 0 2px #b3302a,inset 0 0 0 3.5px rgba(255,238,226,.8)}
+.seal small{font:500 13px/1.3 var(--sans)}
+.bind{position:absolute;top:0;right:0;bottom:0;width:15%;display:flex;flex-direction:column;justify-content:space-evenly;border-left:1px solid rgba(0,0,0,.3);box-shadow:inset 1px 0 0 rgba(255,255,255,.14)}
+.bind::before{content:"";position:absolute;left:calc(38% - 1px);top:16.6%;bottom:16.6%;width:2px;background:var(--thread)}
+.bind i{position:relative;display:block;height:2px;margin-left:38%;background:var(--thread)}
+.bind i::before{content:"";position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:#0a1730;box-shadow:0 0 0 1.5px var(--thread)}
+.board{height:14px;margin-inline:max(5vw,16px);background:var(--panel);border-top:3px solid light-dark(#2b3140,#4a5672)}
+.caps{padding:14px max(5vw,16px) 0}
+.caps a{display:block;text-align:center;text-decoration:none;padding:6px 2px;border-radius:6px;min-height:44px}
+.caps a:hover strong{text-decoration:underline}
+.caps strong{display:block;font:700 clamp(17px,2.4vw,22px)/1.3 var(--serif)}
+.caps span{display:block;color:var(--muted);font-size:clamp(13px,1.6vw,15px);line-height:1.4}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+h2.sec{font:700 clamp(24px,3vw,30px)/1.2 var(--serif);margin:0 0 16px}
+.recent{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.recent li{display:grid;grid-template-columns:8em minmax(0,1fr) auto;gap:2px 16px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.recent a{font-weight:500;text-decoration:none}
+.recent a:hover{text-decoration:underline}
+.recent .where{color:var(--muted);font-size:14px;white-space:nowrap}
+.when{font:700 17px/1.4 var(--serif);white-space:nowrap}
+.nodate{color:var(--muted);font:400 15px/1.4 var(--sans)}
+.group{border-bottom:1px solid var(--line)}
+.group:last-of-type{border-bottom:0}
+.ghead h2{font:700 clamp(24px,3vw,30px)/1.2 var(--serif);margin:0 0 4px}
+.meta{margin:0 0 18px;color:var(--muted)}
+.gwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+.list{border-top:1px solid var(--line)}
+.entry{display:grid;grid-template-columns:8em minmax(0,1fr);gap:4px 24px;padding:22px 0;border-bottom:1px solid var(--line)}
+.entry.hl{background:var(--panel);box-shadow:0 0 0 12px var(--panel)}
+.stamp{display:inline-block;margin:0 0 6px;padding:1px 8px;border:1.5px solid var(--seal);color:var(--seal);font:700 13px/1.6 var(--serif);border-radius:2px}
+.entry h3{margin:0 0 4px;font:700 19px/1.4 var(--serif)}
+.desc{margin:0 0 8px}
+.lab{font-size:13px;color:var(--muted);font-weight:500;margin-right:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 8px}
+.chip{display:inline-flex;align-items:center;min-height:36px;font-size:14px;padding:0 12px;border-radius:999px;background:var(--panel);text-decoration:none}
+.chip:hover{text-decoration:underline}
+.refl{margin:0 0 8px;padding:8px 12px;background:var(--panel);border-radius:4px}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:6px;background:var(--indigo);color:#fff;text-decoration:none;font:500 15px/1.2 var(--sans);border:0;cursor:pointer}
+.btn:hover{background:var(--indigo-l)}
+.btn.off{background:transparent;color:var(--muted);border:1px dashed light-dark(#b9c1cf,#45506a);cursor:default}
+.xref{background:var(--panel);padding:18px 20px;border-radius:6px;align-self:start}
+.xref h3{font:700 16px/1.4 var(--sans);margin:0 0 8px}
+.xref ul{list-style:none;margin:0;padding:0}
+.xref li{padding:8px 0;border-top:1px solid var(--line)}
+.xref a{font-weight:500;text-decoration:none}
+.xref a:hover{text-decoration:underline}
+.xref span{display:block;font-size:13px;color:var(--muted)}
+.empty{color:var(--muted);margin:0;padding:22px 0;border-bottom:1px solid var(--line)}
+.foot{border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+.foot p{margin:0}
+.entry.has-pic{grid-template-columns:8em minmax(0,1fr) 120px}
+.thumb{position:relative;display:block;width:120px;aspect-ratio:3/4;padding:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel);cursor:zoom-in;align-self:start}
+.thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.thumb .more{position:absolute;right:6px;bottom:6px;padding:1px 7px;border-radius:3px;background:rgba(0,0,0,.7);color:#fff;font:500 13px/1.5 var(--sans)}
+.lb{position:fixed;inset:0;z-index:20;background:#0b1019;color:#fff;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:10px;padding:12px max(3vw,12px)}
+.lb[hidden]{display:none}
+.lb .bar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lb .pic{position:relative;min-height:0}
+.lb img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.lb a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:6px;background:rgba(255,255,255,.14);color:#fff;text-decoration:none;font:500 15px/1 var(--sans)}
+.lb .bar div{display:flex;gap:8px;flex:none}
+.lb a,.lb button{white-space:nowrap}
+.lb button{min-height:44px;min-width:44px;padding:0 14px;border:0;border-radius:6px;background:rgba(255,255,255,.14);color:#fff;font:500 15px/1 var(--sans);cursor:pointer}
+.lb .nav2{display:flex;justify-content:center;gap:8px}
+@media(min-width:960px){.gwrap.has-x{grid-template-columns:minmax(0,1fr) 300px}}
+@media(max-width:600px){.entry{grid-template-columns:minmax(0,1fr)}.when{font-size:15px}.recent li{grid-template-columns:minmax(0,1fr) auto}.recent li>:first-child{grid-column:1/-1}.entry.has-pic{grid-template-columns:minmax(0,1fr) 92px}.entry.has-pic>div:first-child{grid-column:1/-1}.thumb{width:92px}.slip{letter-spacing:0;height:64%}.slip .f{display:none}.slip .s{display:inline}.caps span{display:none}.top nav .dd:first-of-type .ddmenu{left:-40px}.top nav .dd[data-dd=assess] .ddmenu{left:auto;right:0;min-width:200px}.seal small{display:none}.seal{padding:3px 5px}.top{padding-top:0;padding-bottom:4px}.brand{padding:10px 0 2px}.top nav{margin-left:-12px}}
+@media(prefers-reduced-motion:reduce){.cover,.ddbtn .chev{transition:none}.book:hover .cover{transform:none}}
+</style>
+<script src="entries.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#home" id="brand">Younsang Chang</a>
+  <nav aria-label="주요 메뉴">
+    <a href="#home" data-nav="home">홈</a>
+    <div class="dd" data-dd="works"><button type="button" class="ddbtn" aria-expanded="false">작품별 정리 <svg class="chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="ddmenu" hidden></div></div>
+    <div class="dd" data-dd="assess"><button type="button" class="ddbtn" aria-expanded="false">페이퍼 준비 <svg class="chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="ddmenu" hidden></div></div>
+    <a href="#io" data-nav="io">구술 에세이</a>
+    <a href="#exams" data-nav="exams">시험지들</a>
+  </nav>
+</header>
+<main id="app"></main>
+<footer class="foot band"><div class="wrap"><p id="foot"></p></div></footer>
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lbcap">
+  <div class="bar"><span id="lbcap"></span><div><a id="lbopen" href="#" target="_blank" rel="noopener">크게 보기</a><button type="button" id="lbclose">닫기</button></div></div>
+  <div class="pic"><img id="lbimg" alt=""></div>
+  <div class="nav2"><button type="button" id="lbprev">이전</button><button type="button" id="lbnext">다음</button></div>
+</div>
+<script>
+{
+  const P = window.PORTFOLIO || {};
+  const site = P.site || {};
+  const works = P.works || [];
+  const entries = (P.entries || []).map((e, i) => Object.assign({}, e, { _i: i }));
+  const app = document.getElementById('app');
+
+  const SECTIONS = {
+    works: { name: '작품별 정리', slip: '작품', short: '작품별 노트와 수업 자료', long: '공부한 작품마다 맥락 조사, 내용 정리, 분석 노트와 수업 자료를 모았습니다. 작품을 고르세요.' },
+    assess: { name: '페이퍼 준비', slip: '페이퍼', short: 'Paper 1 · Paper 2', long: 'Paper 1과 Paper 2 시험을 위한 연습과 수업 자료입니다. 시험을 고르세요.' },
+    paper1: { name: 'Paper 1', short: '비문학 지문 분석', long: '페이퍼 준비 · 처음 보는 비문학 지문을 분석하는 Paper 1을 위한 수업 자료와 연습을 모았습니다.' },
+    paper2: { name: 'Paper 2', short: '두 작품 비교 에세이', long: '페이퍼 준비 · 공부한 두 작품을 비교하는 Paper 2 에세이를 위한 수업 자료와 연습을 모았습니다.' },
+    io: { name: '구술 에세이', slip: '구술', short: 'IO 준비 자료', long: '글로벌 이슈를 문학 작품과 비문학 작품의 발췌문으로 탐구하는 구술 시험(IO) 준비 자료를 모았습니다.' },
+    exams: { name: '시험지들', slip: '시험', short: '수업 중 손으로 쓴 에세이', long: '수업 시간에 손으로 쓴 시험 에세이를 제미나이를 사용하여 나중에 옮겨 적었습니다.' }
+  };
+
+  const KIND = e => ['수업 자료', '예시 에세이'].includes(e.type) ? 'teacher' : ['그룹 활동', '친구 수업 발표'].includes(e.type) ? 'group' : 'mine';
+  const VIEWS = [['all', '전체'], ['mine', '내 작업'], ['teacher', '선생님 자료'], ['group', '그룹·친구 활동']];
+  let fview = 'all';
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const validDate = d => /^\d{4}-\d{2}-\d{2}$/.test(d || '');
+  const fmtDate = d => { if (!validDate(d)) return ''; const [y, m, day] = d.split('-'); return `${y}. ${+m}. ${+day}.`; };
+  const workById = {};
+  works.forEach(w => { workById[w.id] = w; });
+  const workHeading = w => w.title ? `『${w.title}』` : w.author;
+  const chipName = w => w.title || w.author;
+  const SECTIONS_OK = ['works', 'paper1', 'paper2', 'io', 'exams'];
+  // page key an entry lives on: a work page for 작품 entries, otherwise its section
+  const pageOf = e => {
+    if (!SECTIONS_OK.includes(e.section)) return null;
+    if (e.section !== 'works') return e.section;
+    const w = workById[(e.works || [])[0]];
+    return w ? 'work-' + w.id : null;
+  };
+  const parentOf = page => page === 'works' || page.indexOf('work-') === 0 ? 'works' : ['assess', 'paper1', 'paper2'].includes(page) ? 'assess' : page;
+  const placeOf = e => e.section === 'works' ? `작품별 정리 · ${chipName(workById[(e.works || [])[0]] || { author: '' })}` : (SECTIONS[e.section] || {}).name || '';
+  const byDate = (a, b, undatedOrder) => {
+    const da = validDate(a.date), db = validDate(b.date);
+    if (da && db) return b.date.localeCompare(a.date) || a._i - b._i;
+    if (da) return -1;
+    if (db) return 1;
+    return undatedOrder * (a._i - b._i);
+  };
+  const sorted = (list, undatedOrder) => list.slice().sort((a, b) => byDate(a, b, undatedOrder));
+  const inBook = k => entries.filter(e => pageOf(e) && parentOf(pageOf(e)) === k);
+  const ownOf = id => entries.filter(e => e.section === 'works' && (e.works || [])[0] === id);
+
+  const whenHTML = e => validDate(e.date) ? `<time class="when" datetime="${esc(e.date)}">${fmtDate(e.date)}</time>` : '<span class="nodate">날짜 미정</span>';
+
+  function entryHTML(e, hideWork) {
+    const ws = (e.works || []).map(id => workById[id]).filter(w => w && w.id !== hideWork);
+    const chips = ws.map(w => `<a class="chip" href="#work-${esc(w.id)}">${esc(chipName(w))}</a>`).join('');
+    const links = (e.links || []).map(l => {
+      const u = String(l.url || '').trim(), label = esc(l.label || '열기');
+      const web = /^https?:\/\//.test(u), local = u && !/^[a-z][a-z0-9+.-]*:/i.test(u) && !u.startsWith('//');
+      if (web || (local && !window.PORTFOLIO_PREVIEW)) return `<a class="btn" href="${esc(u)}" target="_blank" rel="noopener">${label}</a>`;
+      if (local) return `<span class="btn off" aria-disabled="true">${label} · 공개 사이트에서 열림</span>`;
+      return `<span class="btn off" aria-disabled="true">${label} · 링크 준비 중</span>`;
+    }).join('');
+    const n = (e.images || []).length;
+    const pics = n ? `<button class="btn" type="button" data-lb="${esc(e.id)}">${esc(e.imageLabel || '사진 보기')}${n > 1 ? ` (${n}장)` : ''}</button>` : '';
+    const first = n ? e.images[0] : null;
+    const thumb = first ? `<button class="thumb" type="button" data-lb="${esc(e.id)}" aria-label="${esc(e.title)} 사진 크게 보기"><img src="${esc(first.src)}" alt="" loading="lazy">${n > 1 ? `<span class="more">${n}장</span>` : ''}</button>` : '';
+    return `<article class="entry${thumb ? ' has-pic' : ''}" id="e-${esc(e.id)}">
+      <div>${whenHTML(e)}</div>
+      <div>
+        ${e.type ? `<p class="stamp">${esc(e.type)}</p>` : ''}
+        <h3>${esc(e.title)}</h3>
+        ${chips ? `<p class="chips"><span class="lab">다룬 작품</span>${chips}</p>` : ''}
+        ${e.reflection ? `<p class="refl"><span class="lab">배운 점</span> ${esc(e.reflection)}</p>` : ''}
+        ${links || pics ? `<p class="acts">${links}${pics}</p>` : ''}
+      </div>
+      ${thumb}
+    </article>`;
+  }
+  const listHTML = (list, hideWork, emptyText) => {
+    const shown = fview === 'all' ? list : list.filter(e => KIND(e) === fview);
+    if (shown.length) return `<div class="list">${shown.map(e => entryHTML(e, hideWork)).join('')}</div>`;
+    return `<p class="empty">${list.length ? '이 종류의 자료는 없습니다.' : (emptyText || '아직 올린 자료가 없습니다.')}</p>`;
+  };
+  const filterHTML = pool => {
+    const n = k => k === 'all' ? pool.length : pool.filter(e => KIND(e) === k).length;
+    if (pool.length < 2 || VIEWS.filter(([k]) => k !== 'all' && n(k)).length < 2) return '';
+    return `<div class="filter" role="group" aria-label="자료 종류로 보기">${VIEWS.filter(([k]) => n(k)).map(([k, label]) => `<button type="button" data-view="${k}" aria-pressed="${fview === k}">${label} <span>${n(k)}</span></button>`).join('')}</div>`;
+  };
+  const siblingsHTML = (items, current) => `<ul class="jump">${items.map(it => `<li><a href="#${esc(it.key)}"${it.key === current ? ' aria-current="page"' : ''}>${esc(it.label)}</a></li>`).join('')}</ul>`;
+  const heroHTML = (title, text, extra) => `<section class="hero band"><div class="wrap">
+      <h1>${title}</h1>${text ? `<p class="intro">${text}</p>` : ''}${extra || ''}
+    </div></section>`;
+  const SUB = {
+    works: () => works.map(w => ({ key: 'work-' + w.id, label: chipName(w), name: w.author, sub: w.short || w.title || '' })),
+    assess: () => ['paper1', 'paper2'].map(k => ({ key: k, label: SECTIONS[k].name, name: SECTIONS[k].name, sub: SECTIONS[k].short }))
+  };
+  const countsHTML = pool => {
+    const m = pool.filter(e => KIND(e) === 'mine').length, t = pool.filter(e => KIND(e) === 'teacher').length, g = pool.filter(e => KIND(e) === 'group').length;
+    return `<p class="nums"><span><b>${pool.length}</b>건</span>${m ? `<span>내 작업 ${m}</span>` : ''}${t ? `<span>선생님 자료 ${t}</span>` : ''}${g ? `<span>그룹·친구 ${g}</span>` : ''}</p>`;
+  };
+
+  function homeHTML() {
+    const keys = ['works', 'assess', 'io', 'exams'];
+    const covers = keys.map(k => `<a class="book b-${k}" href="#${k}" tabindex="-1" aria-hidden="true">
+        <span class="cover"><span class="slip"><span class="f">${SECTIONS[k].name}</span><span class="s">${SECTIONS[k].slip}</span></span><span class="seal">${inBook(k).length}<small>건</small></span>
+        <span class="bind"><i></i><i></i><i></i><i></i><i></i></span></span></a>`).join('');
+    const caps = keys.map(k => `<a href="#${k}"><strong>${SECTIONS[k].name}</strong><span class="sr">자료 ${inBook(k).length}건</span></a>`).join('');
+    const recent = sorted(entries.filter(pageOf), -1).slice(0, 5).map(e => `<li>${whenHTML(e)}<a href="#e-${esc(e.id)}">${esc(e.title)}</a><span class="where">${esc(placeOf(e))}</span></li>`).join('');
+    return `<section class="hero band"><div class="wrap">
+        <h1 class="big">학습자 포트폴리오</h1>
+        <p class="who">${esc(site.ownerKo || site.owner)}</p>
+      </div></section>
+      <section class="shelfband band" aria-label="섹션"><div class="wrap"><div class="shelf" style="--n:4">${covers}</div></div></section>
+      <div class="board" aria-hidden="true"></div>
+      <nav class="caps wrap" style="--n:4" aria-label="섹션 바로가기">${caps}</nav>
+      <section class="band"><div class="wrap"><h2 class="sec">최근 추가한 자료</h2>
+        ${recent ? `<ol class="recent">${recent}</ol>` : '<p class="empty">아직 올린 자료가 없습니다.</p>'}
+      </div></section>`;
+  }
+
+  // index pages for the two books that hold several sections
+  function worksIndexHTML() {
+    const cards = works.map(w => {
+      const own = ownOf(w.id);
+      return `<a class="card" href="#work-${esc(w.id)}"><h2>${esc(workHeading(w))}</h2>${countsHTML(own)}</a>`;
+    }).join('');
+    return heroHTML(SECTIONS.works.name, '') + `<section class="band"><div class="wrap cards">${cards}</div></section>`;
+  }
+  function assessIndexHTML() {
+    const cards = ['paper1', 'paper2'].map(k => {
+      const pool = entries.filter(e => e.section === k);
+      return `<a class="card" href="#${k}"><h2>${SECTIONS[k].name}</h2>${countsHTML(pool)}</a>`;
+    }).join('');
+    return heroHTML(SECTIONS.assess.name, '') + `<section class="band"><div class="wrap cards two">${cards}</div></section>`;
+  }
+
+  function workHTML(id) {
+    const w = workById[id];
+    const own = sorted(ownOf(id), 1);
+    return heroHTML(esc(workHeading(w)), '', siblingsHTML(SUB.works(), 'work-' + id) + filterHTML(own)) +
+      `<section class="group band"><div class="wrap">${listHTML(own, id, '이 작품만 따로 정리한 자료는 아직 없습니다.')}</div></section>`;
+  }
+  function sectionHTML(k) {
+    const pool = sorted(entries.filter(e => e.section === k), 1);
+    const sib = (k === 'paper1' || k === 'paper2') ? siblingsHTML(SUB.assess(), k) : '';
+    return heroHTML(SECTIONS[k].name, k === 'exams' ? SECTIONS[k].long : '', sib + (k === 'exams' ? '' : filterHTML(pool))) +
+      `<section class="group band"><div class="wrap">${listHTML(pool)}</div></section>`;
+  }
+
+  const RENDER = { home: homeHTML, works: worksIndexHTML, assess: assessIndexHTML, paper1: () => sectionHTML('paper1'), paper2: () => sectionHTML('paper2'), io: () => sectionHTML('io'), exams: () => sectionHTML('exams') };
+
+  // dropdown menus in the header
+  const dds = [...document.querySelectorAll('.dd')];
+  dds.forEach(dd => {
+    const k = dd.dataset.dd, menu = dd.querySelector('.ddmenu');
+    menu.innerHTML = `<a href="#${k}" data-nav="${k}" class="all">전체 보기</a>` + SUB[k]().map(it => `<a href="#${esc(it.key)}" data-nav="${esc(it.key)}"><strong>${esc(it.name)}</strong></a>`).join('');
+    dd.querySelector('.ddbtn').addEventListener('click', () => {
+      const open = menu.hidden;
+      closeDD();
+      if (open) { menu.hidden = false; dd.querySelector('.ddbtn').setAttribute('aria-expanded', 'true'); }
+    });
+  });
+  function closeDD() { dds.forEach(dd => { dd.querySelector('.ddmenu').hidden = true; dd.querySelector('.ddbtn').setAttribute('aria-expanded', 'false'); }); }
+  document.addEventListener('click', ev => { if (!ev.target.closest('.dd')) closeDD(); });
+  document.addEventListener('keydown', ev => {
+    const open = dds.find(dd => !dd.querySelector('.ddmenu').hidden);
+    if (ev.key === 'Escape' && open) { closeDD(); open.querySelector('.ddbtn').focus(); }
+  });
+
+  let lastPage = null;
+  function route(keep) {
+    let h = '';
+    try { h = decodeURIComponent(location.hash.slice(1)); } catch (err) { h = ''; }
+    let page = 'home', target = null, mark = false;
+    if (RENDER[h]) page = h;
+    else if (h.indexOf('work-') === 0 && workById[h.slice(5)]) page = h;
+    else if (h.indexOf('e-') === 0) {
+      const e = entries.find(x => 'e-' + x.id === h);
+      if (e && pageOf(e)) { page = pageOf(e); target = h; mark = true; }
+    }
+    if (page !== lastPage) fview = 'all';
+    lastPage = page;
+    app.innerHTML = page.indexOf('work-') === 0 ? workHTML(page.slice(5)) : RENDER[page]();
+    const parent = parentOf(page);
+    document.querySelectorAll('[data-nav]').forEach(a => {
+      if (a.dataset.nav === page) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    dds.forEach(dd => dd.querySelector('.ddbtn').classList.toggle('on', dd.dataset.dd === parent));
+    closeDD();
+    const el = target && document.getElementById(target);
+    if (el) {
+      el.scrollIntoView({ block: 'start' });
+      if (mark) { el.classList.add('hl'); setTimeout(() => el.classList.remove('hl'), 2400); }
+    } else if (!keep) window.scrollTo(0, 0);
+  }
+
+  const lb = document.getElementById('lb'), lbImg = document.getElementById('lbimg'), lbCap = document.getElementById('lbcap');
+  const prevBtn = document.getElementById('lbprev'), nextBtn = document.getElementById('lbnext');
+  const view = { list: [], i: 0, title: '', from: null };
+  function showPic() {
+    const im = view.list[view.i] || {};
+    lbImg.src = im.src || '';
+    lbImg.alt = im.alt || view.title;
+    lbCap.textContent = view.list.length > 1 ? `${view.title} (${view.i + 1}/${view.list.length})` : view.title;
+    prevBtn.hidden = nextBtn.hidden = view.list.length < 2;
+    const open = document.getElementById('lbopen');
+    open.hidden = !im.src || /^data:/.test(im.src);
+    if (!open.hidden) open.href = im.src;
+  }
+  function closePic() { lb.hidden = true; lbImg.removeAttribute('src'); if (view.from) view.from.focus(); }
+  function step(d) { if (view.list.length > 1) { view.i = (view.i + d + view.list.length) % view.list.length; showPic(); } }
+  app.addEventListener('click', ev => {
+    const f = ev.target.closest('[data-view]');
+    if (f) { fview = f.dataset.view; const y = window.scrollY; route(true); window.scrollTo(0, y); return; }
+    const b = ev.target.closest('[data-lb]');
+    if (!b) return;
+    const e = entries.find(x => x.id === b.dataset.lb);
+    if (!e || !(e.images || []).length) return;
+    Object.assign(view, { list: e.images, i: 0, title: e.title || '', from: b });
+    showPic();
+    lb.hidden = false;
+    document.getElementById('lbclose').focus();
+  });
+  document.getElementById('lbclose').addEventListener('click', closePic);
+  prevBtn.addEventListener('click', () => step(-1));
+  nextBtn.addEventListener('click', () => step(1));
+  lb.addEventListener('click', ev => { if (ev.target === lb || ev.target.classList.contains('pic')) closePic(); });
+  document.addEventListener('keydown', ev => {
+    if (lb.hidden) return;
+    if (ev.key === 'Escape') closePic();
+    else if (ev.key === 'ArrowLeft') step(-1);
+    else if (ev.key === 'ArrowRight') step(1);
+  });
+
+  document.getElementById('brand').textContent = site.owner || 'Learner Portfolio';
+  document.getElementById('foot').textContent = `${site.owner || ''} · ${site.course || ''} (${site.level || ''}) 학습자 포트폴리오` + (validDate(site.updated) ? ` · 최근 업데이트 ${fmtDate(site.updated)}` : '');
+  window.addEventListener('hashchange', () => route());
+  route();
+}
+</script>
+</body>
+</html>
