@@ -66,6 +66,12 @@ a{color:inherit}
 .top nav .ddmenu a span{font-size:13px;color:var(--muted);font-weight:400}
 .top nav .ddmenu a.all{min-height:40px;font-size:14px;color:var(--muted);border-bottom:1px solid var(--line);border-radius:6px 6px 0 0;margin-bottom:4px}
 .b-assess{--c1:#1f3d6b;--c2:#0f2446}
+.refband{padding-bottom:0}
+.refbox{position:relative;max-width:1120px;margin:14px 0 0;padding:34px clamp(18px,3vw,36px) 26px;border:1.5px solid #9fb0cc;border-radius:6px}
+.refbox h2{position:absolute;top:0;left:clamp(14px,2.4vw,28px);transform:translateY(-50%);margin:0;padding:0 12px;background:var(--bg);color:var(--indigo);font:700 clamp(20px,2.4vw,24px)/1.2 var(--serif);letter-spacing:.01em}
+.refbox p{max-width:46em;margin:0 0 12px;font-size:17px;line-height:1.85}
+.refbox p:last-child{margin-bottom:0}
+.refbox .ph{color:var(--muted);font-size:15px}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
 .cards.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
 .card{display:block;padding:20px 22px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--ink);background:var(--bg)}
@@ -265,6 +271,13 @@ h2.sec{font:700 clamp(24px,3vw,30px)/1.2 var(--serif);margin:0 0 16px}
     works: () => works.map(w => ({ key: 'work-' + w.id, label: chipName(w), name: w.author, sub: w.short || w.title || '' })),
     assess: () => ['paper1', 'paper2'].map(k => ({ key: k, label: SECTIONS[k].name, name: SECTIONS[k].name, sub: SECTIONS[k].short }))
   };
+  // Reflection box under the banner (written by the student in site.reflections)
+  const reflectHTML = k => {
+    const text = String(((site.reflections || {})[k]) || '').trim();
+    if (!text && !window.PORTFOLIO_PREVIEW) return '';
+    const body = text ? text.split(/\n\s*\n/).map(p => `<p>${esc(p.trim()).replace(/\n/g, '<br>')}</p>`).join('') : '<p class="ph">여기에 직접 쓴 Reflection 문단이 들어갑니다. (미리보기에서만 보이는 안내 문구)</p>';
+    return `<section class="band refband"><div class="wrap"><div class="refbox"><h2>Reflections</h2>${body}</div></div></section>`;
+  };
   const countsHTML = pool => {
     const m = pool.filter(e => KIND(e) === 'mine').length, t = pool.filter(e => KIND(e) === 'teacher').length, g = pool.filter(e => KIND(e) === 'group').length;
     return `<p class="nums"><span><b>${pool.length}</b>건</span>${m ? `<span>내 작업 ${m}</span>` : ''}${t ? `<span>선생님 자료 ${t}</span>` : ''}${g ? `<span>그룹·친구 ${g}</span>` : ''}</p>`;
@@ -295,7 +308,7 @@ h2.sec{font:700 clamp(24px,3vw,30px)/1.2 var(--serif);margin:0 0 16px}
       const own = ownOf(w.id);
       return `<a class="card" href="#work-${esc(w.id)}"><h2>${esc(workHeading(w))}</h2>${countsHTML(own)}</a>`;
     }).join('');
-    return heroHTML(SECTIONS.works.name, '') + `<section class="band"><div class="wrap cards">${cards}</div></section>`;
+    return heroHTML(SECTIONS.works.name, '') + reflectHTML('works') + `<section class="band"><div class="wrap cards">${cards}</div></section>`;
   }
   function assessIndexHTML() {
     const cards = ['paper1', 'paper2'].map(k => {
@@ -315,6 +328,7 @@ h2.sec{font:700 clamp(24px,3vw,30px)/1.2 var(--serif);margin:0 0 16px}
     const pool = sorted(entries.filter(e => e.section === k), 1);
     const sib = (k === 'paper1' || k === 'paper2') ? siblingsHTML(SUB.assess(), k) : '';
     return heroHTML(SECTIONS[k].name, k === 'exams' ? SECTIONS[k].long : '', sib + (k === 'exams' ? '' : filterHTML(pool))) +
+      (['paper1', 'paper2', 'io'].includes(k) ? reflectHTML(k) : '') +
       `<section class="group band"><div class="wrap">${listHTML(pool)}</div></section>`;
   }
 

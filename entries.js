@@ -17,6 +17,8 @@
    6. links 의 url 에 Google 문서 주소를 붙여 넣으세요. 비워 두면 "링크 준비 중"으로 표시됩니다.
    7. 사진(손노트 등)은 images 폴더에 올리고 images 에 {src:"images/파일이름.jpg", alt:"설명"} 을 넣으세요.
    8. description(설명)과 reflection(배운 점)은 지금 사이트에 표시되지 않습니다.
+   9. 각 섹션의 Reflection 문단은 site.reflections 에 쓰세요 (works, paper1, paper2, io).
+      비워 두면 공개 사이트에는 Reflection 상자가 보이지 않습니다. 문단을 나누려면 \n\n 을 쓰세요.
    ===================================================================== */
 
 window.PORTFOLIO = {
@@ -26,7 +28,13 @@ window.PORTFOLIO = {
     "course": "IB DP 한국어 A: 언어와 문학",
     "level": "SL",
     "updated": "2026-11-25",
-    "intro": "IB DP 한국어 A: 언어와 문학 과정에서 공부한 작품 노트, Paper 1·Paper 2 연습, 개인 구술(IO) 준비 자료, 수업 중 손으로 쓴 시험 에세이를 모은 학습 기록입니다. 각 자료에는 날짜와 짧은 설명이 있으며, 버튼을 누르면 원본 문서가 열립니다."
+    "intro": "IB DP 한국어 A: 언어와 문학 과정에서 공부한 작품 노트, Paper 1·Paper 2 연습, 개인 구술(IO) 준비 자료, 수업 중 손으로 쓴 시험 에세이를 모은 학습 기록입니다. 각 자료에는 날짜와 짧은 설명이 있으며, 버튼을 누르면 원본 문서가 열립니다.",
+    "reflections": {
+      "works": "",
+      "paper1": "",
+      "paper2": "",
+      "io": ""
+    }
   },
 
   works: [
