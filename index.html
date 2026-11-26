@@ -202,7 +202,7 @@ h2.sec{font:700 clamp(24px,3vw,30px)/1.2 var(--serif);margin:0 0 16px}
   const fmtDate = d => { if (!validDate(d)) return ''; const [y, m, day] = d.split('-'); return `${y}. ${+m}. ${+day}.`; };
   const workById = {};
   works.forEach(w => { workById[w.id] = w; });
-  const workHeading = w => w.title ? `『${w.title}』` : w.author;
+  const workHeading = w => w.title ? `<${w.title}>` : w.author;
   const chipName = w => w.title || w.author;
   const SECTIONS_OK = ['works', 'paper1', 'paper2', 'io', 'exams'];
   // page key an entry lives on: a work page for 작품 entries, otherwise its section
